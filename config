@@ -1,0 +1,249 @@
+set $mod Mod4
+
+# Hybrid colors
+set $black	    #161A1F
+set $white	    #839496
+set $gray	    #8C8C8C
+set $dark-gray   #444444
+set $green 	    #96BF33
+set $blue	    #00BFFF
+set $purple	    #F37DEE
+set $pink	    #F92672
+set $red	            #B58900
+set $orange	    #E59847
+
+font pango:DejaVu Sans Mono light 10
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+# bindsym $mod+d exec dmenu_run
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# one bar on both screens
+bar {
+  position top
+#  mode hide
+#  modifier $mod
+colors {
+#        background	$black
+#       statusline	$gray
+        separator	$dark-gray
+
+        # colour                          border             background      text 
+        focused_workspace	$blue	  $blue		     $gray
+        active_workspace	        $blue		$gray 	          $blue
+        inactive_workspace	$dark-gray 	$dark-gray        $blue
+	urgent_workspace         $orange          $orange            $dark-gray
+       }
+
+        status_command i3status -c /etc/i3status.conf
+}
+
+#class                             border         backgr       text            indicator
+client.focused		$blue	   $blue	  $dark-gray   $white
+client.unfocused	        $dark-gray	  $dark-gray	       $blue  $white
+client.focused_inactive	$dark-gray		  $dark-gray	       $gray  $white
+client.urgent                  $orange		  $orange	       $white $white
+
+# open certain windows in floating mode
+for_window [class="(?i)gnome-calculator"] floating enable
+for_window [window_role="(?i)pop-up"] floating enable
+
+# Use i3lock to lock machine when away
+# this method ensures i move to emacs window to isolate from chat windows
+bindsym $mod+Ctrl+l exec "i3-msg workspace 2 && i3lock -c 222222 -d"
+
+# Use other monitors
+bindsym $mod+Ctrl+m exec "xrandr --output HDMI1 --primary --auto --mode 1920x1080 --output HDMI2 --mode 1920x1080 --left-of HDMI3 --rotate left --output HDMI3 --mode 1920x1080 --left-of HDMI1 --rotate right"
+
+# Capturing screen images
+## Screenshot region and open in GIMP
+bindsym $mod+Print exec "scrot -s -e 'mv $f /tmp/ && gimp /tmp/$f' --release"
+
+## Screenshot whole screen and open in GIMP
+bindsym Control+Print exec "scrot -e 'mv $f /tmp/ && gimp /tmp/$f'"
+
+# pulse audio volume control
+set $sink `pactl list short sinks | grep RUNNING | cut -f1`
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $sink -- +10%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $sink -- -10%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $sink toggle
+
+# brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+  # These bindings trigger as soon as you enter the resize mode
+  bindsym j resize shrink width 10 px or 10 ppt
+  bindsym k resize grow height 10 px or 10 ppt
+  bindsym l resize shrink height 10 px or 10 ppt
+  bindsym semicolon resize grow width 10 px or 10 ppt
+  #bindsym uring resize grow width 10 px or 10 ppt
+
+  # same bindings, but for the arrow keys
+  bindsym 113 resize shrink width 10 px or 10 ppt
+  bindsym 116 resize grow height 10 px or 10 ppt
+  bindsym 111 resize shrink height 10 px or 10 ppt
+  bindsym 114 resize grow width 10 px or 10 ppt
+
+  # back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# workspace assignment (use "xprop")
+# =====================================================================
+
+## workspace 1 -------------------- :communications
+workspace 1 output HDMI2
+
+
+## workspace 2 -------------------- :network 
+workspace 2 output HDMI2
+
+assign [class="^Icedove$"] 1
+assign [class="^Thunderbird$"] 1
+
+# WiFi connection tool
+
+
+## workspace 3 -------------------- :monitoring 
+workspace 3 output HDMI2
+
+
+## workspace 4 -------------------- :
+workspace 4 output HDMI3
+
+
+
+## workspace 5 -------------------- :development
+workspace 5 output HDMI3
+
+
+## workspace 6 -------------------- :browser-firefox
+workspace 6 output HDMI3
+
+### firefox
+assign [class="^Firefox$"] 6
+
+
+## workspace 7 -------------------- :browser-chrome
+workspace 7 output HDMI1
+
+## chrome
+assign [class="^Google-chrome$"] 7
+
+  # custom window settings
+for_window [class="^Google-chrome$"] border none
+
+
+## workspace 8 -------------------- :browser-opera
+workspace 8 output HDMI1
+
+### opera
+assign [class="^Opera$"] 7
+
+
+## workspace 9 -------------------- :media
+workspace 9 output HDMI1
+
+# media player
+assign [class="^Banshee"] 9
+
+
+## workspace 10 -------------------- :shell
+workspace 10 output HDMI1
+

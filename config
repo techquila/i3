@@ -113,11 +113,19 @@ bar {
 
 # Use i3lock to lock machine when away
 # this method ensures i move to emacs window to isolate from chat windows
-bindsym $mod+Ctrl+l exec "i3-msg workspace 2 && i3lock -c 222222 -d"
+bindsym $mod+Ctrl+l exec "i3-msg workspace 3  && i3lock -c 222222 -d"
 
 # Use other monitors
 #bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --output HDMI1 --mode 1920x1080 --left-of eDP1"
+<<<<<<< Updated upstream
 bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --output DP2-1 --above eDP1 --output DP2-2 --above eDP1 --left-of DP2-1
+=======
+<<<<<<< HEAD
+bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --output DP2-1 --above eDP1 --output DP2-2 --above eDP1 --left-of DP2-1"
+=======
+bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --output DP2-1 --above eDP1 --output DP2-2 --above eDP1 --left-of DP2-1
+>>>>>>> 5d85ae0a32f9a5e710fa273db8e66b30ecc3188f
+>>>>>>> Stashed changes
 
 # Capturing screen images
 ## Screenshot region and open in GIMP

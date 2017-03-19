@@ -1,18 +1,13 @@
 set $mod Mod4
 
-# Hybrid colors
-set $black	    #161A1F
-set $white	    #839496
-set $gray	    #8C8C8C
-set $dark-gray   #444444
-set $green 	    #96BF33
-set $blue	    #00BFFF
-set $purple	    #F37DEE
-set $pink	    #F92672
-set $red	            #B58900
-set $orange	    #E59847
-
-font pango:DejaVu Sans Mono light 10
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below. ISO 10646 = Unicode
+#   font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, if you need a lot of unicode glyphs or
+# right-to-left text rendering, you should instead use pango for rendering and
+# chose a FreeType font, such as:
+font pango:DejaVu Sans Mono 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -22,9 +17,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
-
+ 
 # start dmenu (a program launcher)
-# bindsym $mod+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -113,37 +107,17 @@ bar {
   position top
 #  mode hide
 #  modifier $mod
-colors {
-#        background	$black
-#       statusline	$gray
-        separator	$dark-gray
-
-        # colour                          border             background      text 
-        focused_workspace	$blue	  $blue		     $gray
-        active_workspace	        $blue		$gray 	          $blue
-        inactive_workspace	$dark-gray 	$dark-gray        $blue
-	urgent_workspace         $orange          $orange            $dark-gray
-       }
-
-        status_command i3status -c /etc/i3status.conf
+  status_command i3status
+#  tray_output eDP1
 }
-
-#class                             border         backgr       text            indicator
-client.focused		$blue	   $blue	  $dark-gray   $white
-client.unfocused	        $dark-gray	  $dark-gray	       $blue  $white
-client.focused_inactive	$dark-gray		  $dark-gray	       $gray  $white
-client.urgent                  $orange		  $orange	       $white $white
-
-# open certain windows in floating mode
-for_window [class="(?i)gnome-calculator"] floating enable
-for_window [window_role="(?i)pop-up"] floating enable
 
 # Use i3lock to lock machine when away
 # this method ensures i move to emacs window to isolate from chat windows
 bindsym $mod+Ctrl+l exec "i3-msg workspace 2 && i3lock -c 222222 -d"
 
 # Use other monitors
-bindsym $mod+Ctrl+m exec "xrandr --output HDMI1 --primary --auto --mode 1920x1080 --output HDMI2 --mode 1920x1080 --left-of HDMI3 --rotate left --output HDMI3 --mode 1920x1080 --left-of HDMI1 --rotate right"
+#bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --output HDMI1 --mode 1920x1080 --left-of eDP1"
+bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --output DP2-1 --above eDP1 --output DP2-2 --above eDP1 --left-of DP2-1
 
 # Capturing screen images
 ## Screenshot region and open in GIMP
@@ -190,14 +164,13 @@ bindsym $mod+r mode "resize"
 ## workspace 1 -------------------- :communications
 workspace 1 output HDMI2
 
+assign [class="^Icedove$"] 1
+assign [class="^Thunderbird$"] 1
 
 ## workspace 2 -------------------- :network 
 workspace 2 output HDMI2
 
-assign [class="^Icedove$"] 1
-assign [class="^Thunderbird$"] 1
-
-# WiFi connection tool
+# 
 
 
 ## workspace 3 -------------------- :monitoring 
@@ -206,7 +179,6 @@ workspace 3 output HDMI2
 
 ## workspace 4 -------------------- :
 workspace 4 output HDMI3
-
 
 
 ## workspace 5 -------------------- :development
@@ -224,17 +196,16 @@ assign [class="^Firefox$"] 6
 workspace 7 output HDMI1
 
 ## chrome
+assign [class="^Chromium$"] 7
 assign [class="^Google-chrome$"] 7
 
   # custom window settings
+for_window [class="^Chromium$"] border none
 for_window [class="^Google-chrome$"] border none
 
 
-## workspace 8 -------------------- :browser-opera
+## workspace 8 -------------------- 
 workspace 8 output HDMI1
-
-### opera
-assign [class="^Opera$"] 7
 
 
 ## workspace 9 -------------------- :media

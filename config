@@ -111,13 +111,20 @@ bar {
 #  tray_output eDP1
 }
 
+##
 # Use i3lock to lock machine when away
 # this method ensures i move to a window that's not a chat window.
 bindsym $mod+Ctrl+l exec "i3-msg workspace 3  && i3lock -c 222222 -d"
 
+##
 # Use other monitors
+# HOME
 #bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --output HDMI1 --mode 1920x1080 --left-of eDP1"
-bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --output DP2-1 --above eDP1 --output DP2-2 --above eDP1 --left-of DP2-1"
+
+# WORK
+bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --preferred --mode 1600x900 \
+ --output HDMI1 --mode 1920x1080 --above eDP1  \
+ --output HDMI2 --mode 1920x1080 --above eDP1 --right-of HDMI1" 
 
 # Capturing screen images
 ## Screenshot region and open in GIMP
@@ -162,59 +169,57 @@ bindsym $mod+r mode "resize"
 # =====================================================================
 
 ## workspace 1 -------------------- :communications
-workspace 1 output HDMI2
+workspace 1 output HDMI1
 
 assign [class="^Icedove$"] 1
 assign [class="^Thunderbird$"] 1
+assign [class="^Hexchat$"] 1
 
 ## workspace 2 -------------------- :network 
-workspace 2 output HDMI2
-
-# 
+workspace 2 output HDMI1
 
 
-## workspace 3 -------------------- :monitoring 
-workspace 3 output HDMI2
+## workspace 3 -------------------- :browser-chrome
+workspace 3 output HDMI1
+
+# chrome
+assign [class="^Chromium$"] 3
+assign [class="^Google-chrome$"] 3
+
+# custom window settings
+for_window [class="^Chromium$"] border none
+for_window [class="^Google-chrome$"] border none
 
 
-## workspace 4 -------------------- :
-workspace 4 output HDMI3
+## workspace 4 -------------------- :development
+workspace 4 output HDMI2
 assign [class="^Emacs$"] 4
 
-## workspace 5 -------------------- :development
+## workspace 5 -------------------- 
 workspace 5 output HDMI3
 
 
 ## workspace 6 -------------------- :browser-firefox
-workspace 6 output HDMI3
+workspace 6 output HDMI2
 
 ### firefox
 assign [class="^Firefox$"] 6
 
 
-## workspace 7 -------------------- :browser-chrome
-workspace 7 output HDMI1
-
-## chrome
-assign [class="^Chromium$"] 7
-assign [class="^Google-chrome$"] 7
-
-  # custom window settings
-for_window [class="^Chromium$"] border none
-for_window [class="^Google-chrome$"] border none
+## workspace 7 -------------------- :
+workspace 7 output HDMI2
 
 
 ## workspace 8 -------------------- 
-workspace 8 output HDMI1
+workspace 8 output HDMI2
 
 
 ## workspace 9 -------------------- :media
-workspace 9 output HDMI1
+workspace 9 output eDP1
 
 # media player
 assign [class="^Banshee"] 9
 
-
 ## workspace 10 -------------------- :shell
-workspace 10 output HDMI1
+workspace 10 output eDP1
 

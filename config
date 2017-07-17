@@ -119,12 +119,11 @@ bindsym $mod+Ctrl+l exec "i3-msg workspace 3  && i3lock -c 222222 -d"
 ##
 # Use other monitors
 # HOME
-#bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --output HDMI1 --mode 1920x1080 --left-of eDP1"
+#bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --output HDMI1 --mode 1920x1080 --above eDP1"
 
 # WORK
-bindsym $mod+Ctrl+m exec "xrandr --output eDP1 --primary --preferred --mode 1600x900 \
- --output HDMI1 --mode 1920x1080 --above eDP1  \
- --output HDMI2 --mode 1920x1080 --above eDP1 --right-of HDMI1" 
+bindsym $mod+Ctrl+m exec "xrandr --output eDP-1 --primary --preferred --mode 1600x900 \
+ --output HDMI-2 --mode 1920x1080 --right-of eDP-1"
 
 # Capturing screen images
 ## Screenshot region and open in GIMP
@@ -169,18 +168,19 @@ bindsym $mod+r mode "resize"
 # =====================================================================
 
 ## workspace 1 -------------------- :communications
-workspace 1 output HDMI1
+workspace 1 output eDP-1
 
 assign [class="^Icedove$"] 1
 assign [class="^Thunderbird$"] 1
 assign [class="^Hexchat$"] 1
 
-## workspace 2 -------------------- :network 
-workspace 2 output HDMI1
-
+## workspace 2 -------------------- :files and password manager
+workspace 2 output eDP-1
+assign [class="^Nautilus$"] 2
+assign [class="^Keepass2$"] 2
 
 ## workspace 3 -------------------- :browser-chrome
-workspace 3 output HDMI1
+workspace 3 output HDMI-2
 
 # chrome
 assign [class="^Chromium$"] 3
@@ -190,36 +190,30 @@ assign [class="^Google-chrome$"] 3
 for_window [class="^Chromium$"] border none
 for_window [class="^Google-chrome$"] border none
 
-
 ## workspace 4 -------------------- :development
-workspace 4 output HDMI2
+workspace 4 output eDP-1
 assign [class="^Emacs$"] 4
 
 ## workspace 5 -------------------- 
 workspace 5 output HDMI3
 
-
 ## workspace 6 -------------------- :browser-firefox
-workspace 6 output HDMI2
-
+workspace 6 output eDP-1
 ### firefox
 assign [class="^Firefox$"] 6
 
-
 ## workspace 7 -------------------- :
-workspace 7 output HDMI2
-
+workspace 7 output HDMI-2
 
 ## workspace 8 -------------------- 
-workspace 8 output HDMI2
-
+workspace 8 output HDMI-2
 
 ## workspace 9 -------------------- :media
-workspace 9 output eDP1
+workspace 9 output eDP-1
 
 # media player
 assign [class="^Banshee"] 9
 
 ## workspace 10 -------------------- :shell
-workspace 10 output eDP1
+workspace 10 output eDP-1
 
